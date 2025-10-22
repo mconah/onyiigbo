@@ -9,20 +9,46 @@ interface SettingsPanelProps {
   setUser: (updatedUser: User) => void; // Changed type for consistency
 }
 
-const interestOptions = [
-  'Request a Language Service',
-  'Find a Tutor',
-  'Become a Tutor',
-  'Become a Service Provider',
-  'Explore Igbo Culture'
-];
+// Define interest options based on role
+const getInterestOptionsForRole = (role: User['role']): string[] => {
+  if (role === 'Admin') {
+    // Admins can select all interests
+    return [
+      'Request a Language Service',
+      'Find a Tutor',
+      'Become a Tutor',
+      'Become a Service Provider',
+      'Explore Igbo Culture'
+    ];
+  } else if (role === 'Service Provider') {
+    // Service providers can choose what services they offer
+    return [
+      'Become a Tutor',
+      'Become a Service Provider',
+      'Explore Igbo Culture'
+    ];
+  } else {
+    // Clients can select what they want to do
+    return [
+      'Request a Language Service',
+      'Find a Tutor',
+      'Explore Igbo Culture'
+    ];
+  }
+};
 
 const SettingsPanel: React.FC<SettingsPanelProps> = ({ user, setUser }) => {
   const [name, setName] = useState(user.name);
-  const [interests, setInterests] = useState(user.interests);
+  // Convert comma-separated string to array for UI
+  const [interests, setInterests] = useState<string[]>(
+    user.interests ? user.interests.split(', ').filter(i => i.trim()) : []
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  // Get available interests based on user role
+  const availableInterests = getInterestOptionsForRole(user.role);
 
   const handleInterestChange = (interest: string) => {
     setInterests(prev =>
@@ -37,10 +63,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ user, setUser }) => {
     setError(null);
     setSuccess(null);
 
-    // Determine new role and status based on updated interests
-    const isProvider = interests.includes('Become a Tutor') || interests.includes('Become a Service Provider');
-    const newRole: User['role'] = isProvider ? (user.role === 'Admin' ? 'Admin' : 'Service Provider') : 'Client'; // Preserve Admin role
-    const newStatus: User['status'] = newRole === 'Client' ? 'Active' : (user.status === 'Verified' ? 'Verified' : 'Pending Verification');
+    // Convert interests array back to comma-separated string for storage
+    const interestsString = interests.join(', ');
     
     try {
       const updatedDoc = await databases.updateDocument(
@@ -49,9 +73,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ user, setUser }) => {
         user.$id,
         {
           name,
-          interests,
-          role: newRole,
-          status: newStatus,
+          interests: interestsString,
         }
       );
       
@@ -59,8 +81,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ user, setUser }) => {
         ...user,
         name: updatedDoc.name,
         interests: updatedDoc.interests,
-        role: updatedDoc.role,
-        status: updatedDoc.status,
       };
       setUser(updatedUser);
       setSuccess('Changes saved successfully!');
@@ -114,9 +134,14 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ user, setUser }) => {
         
         <div>
           <h3 className="font-unica-one text-xl font-bold text-primary-text mb-4">My Interests</h3>
-          <p className="text-secondary-text mb-4">Select what you'd like to do on OnyiIgbo. This will customize your dashboard.</p>
+          <p className="text-secondary-text mb-4">
+            Select what you'd like to do on OnyiIgbo. 
+            {user.role === 'Admin' && ' As an admin, you have access to all interests.'}
+            {user.role === 'Service Provider' && ' Choose the services you want to offer.'}
+            {user.role === 'Client' && ' Choose what you want to explore.'}
+          </p>
           <div className="space-y-2">
-            {interestOptions.map(interest => (
+            {availableInterests.map(interest => (
               <label key={interest} className="flex items-center p-3 bg-input-bg border border-soft-gray rounded-lg cursor-pointer hover:bg-accent-primary/10 max-w-sm">
                 <input 
                   type="checkbox" 
@@ -129,6 +154,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ user, setUser }) => {
               </label>
             ))}
           </div>
+          {user.role === 'Service Provider' && interests.includes('Become a Tutor') && (
+            <p className="text-sm text-igbo-leaf-green mt-3 bg-igbo-leaf-green/10 p-3 rounded-lg border border-igbo-leaf-green">
+              ✓ You'll appear on the Tutors page once your account is verified.
+            </p>
+          )}
         </div>
         
         <div>

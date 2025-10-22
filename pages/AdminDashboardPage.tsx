@@ -5,6 +5,7 @@ import AdminUserTable from '../components/dashboard/AdminUserTable';
 import AdminJobTable from '../components/dashboard/AdminJobTable';
 import AdminContentTable from '../components/dashboard/AdminContentTable';
 import AdminNewsTable from '../components/dashboard/AdminNewsTable';
+import ChatInterface from '../components/dashboard/ChatInterface';
 import { User, ServiceRequest, Post, NewsPost } from '../data/mockData';
 import VerificationModal from '../components/modals/VerificationModal';
 import AssignJobModal from '../components/modals/AssignJobModal';
@@ -12,9 +13,8 @@ import CreatePostModal from '../components/modals/CreatePostModal';
 import EditPostModal from '../components/modals/EditPostModal';
 import CreateNewsPostModal from '../components/modals/CreateNewsPostModal';
 import EditNewsPostModal from '../components/modals/EditNewsPostModal';
-import { databases, dbId, usersCollectionId, serviceRequestsCollectionId, blogPostsCollectionId, newsPostsCollectionId, chatsCollectionId } from '../lib/appwrite'; // NEW: chatsCollectionId
-import { Query, ID, AppwriteException } from 'appwrite';
-import { useChat } from '../components/ChatProvider'; // NEW: Import useChat hook
+import { databases, dbId, usersCollectionId, serviceRequestsCollectionId, blogPostsCollectionId, newsPostsCollectionId, chatsCollectionId, messagesCollectionId } from "../lib/appwrite";
+import { Query, ID, AppwriteException } from "appwrite";
 
 interface AdminDashboardPageProps {
   user: User; // The admin user currently logged in
@@ -30,9 +30,6 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    // Chat context for initiating chat on assignment
-    const { createChat } = useChat(); // NEW
 
     // Modals state
     const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false);
@@ -136,18 +133,10 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
     // --- Handlers for Jobs ---
     const handleAssignJob = useCallback(async (jobId: string, providerAppwriteId: string) => {
         try {
-            const providerUser = users.find(u => u.appwrite_user_id === providerAppwriteId);
-            const clientUser = users.find(u => u.appwrite_user_id === jobToAssign?.client_appwrite_id);
-
             await databases.updateDocument(dbId, serviceRequestsCollectionId, jobId, {
                 assigned_provider_appwrite_id: providerAppwriteId,
                 status: 'In Progress'
             });
-
-            // NEW: Create a chat between client and tutor upon assignment
-            if (providerUser && clientUser && jobToAssign) {
-              await createChat(clientUser.appwrite_user_id, clientUser.name, providerUser.appwrite_user_id, providerUser.name, jobToAssign.$id);
-            }
 
             fetchAllData(); // Re-fetch all data
             setIsAssignJobModalOpen(false);
@@ -156,7 +145,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
             console.error('Error assigning job:', error);
             alert('Failed to assign job.');
         }
-    }, [fetchAllData, users, jobToAssign, createChat]);
+    }, [fetchAllData]);
 
     const handleJobStatusChange = useCallback(async (jobId: string, newStatus: ServiceRequest['status']) => {
         try {
@@ -183,6 +172,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
                 {
                     title: newPost.title,
                     author_name: newPost.author,
+                    author_appwrite_id: user.appwrite_user_id, // NEW: Add author's appwrite ID
                     date_published: new Date().toISOString().split('T')[0],
                     category: newPost.category,
                     excerpt: newPost.excerpt,
@@ -195,7 +185,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
             console.error('Error creating blog post:', error);
             alert('Failed to create blog post.');
         }
-    }, [fetchAllData]);
+    }, [fetchAllData, user.appwrite_user_id]);
 
     const handleUpdatePost = useCallback(async (updatedPost: Post) => {
         try {
@@ -247,6 +237,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
                 {
                     title: newNewsPost.title,
                     author_name: newNewsPost.author,
+                    author_appwrite_id: user.appwrite_user_id, // NEW: Add author's appwrite ID
                     date_published: new Date().toISOString().split('T')[0],
                     category: newNewsPost.category,
                     excerpt: newNewsPost.excerpt,
@@ -260,7 +251,7 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
             console.error('Error creating news post:', error);
             alert('Failed to create news post.');
         }
-    }, [fetchAllData]);
+    }, [fetchAllData, user.appwrite_user_id]);
 
     const handleUpdateNewsPost = useCallback(async (updatedNewsPost: NewsPost) => {
         try {
@@ -340,6 +331,8 @@ const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ user, onOpenCha
           return <AdminContentTable posts={posts} onCreatePost={() => setIsCreatePostModalOpen(true)} onEditPost={handleOpenEditPostModal} onDeletePost={handleDeletePost} />;
       case 'News':
           return <AdminNewsTable newsPosts={newsPosts} onCreateNewsPost={() => setIsCreateNewsPostModalOpen(true)} onEditNewsPost={handleOpenEditNewsPostModal} onDeleteNewsPost={handleDeleteNewsPost} />;
+      case 'Messages':
+          return <ChatInterface user={user} chatsCollectionId={chatsCollectionId} messagesCollectionId={messagesCollectionId} />;
       default:
         return <div className="text-secondary-text">Select a tab</div>;
     }

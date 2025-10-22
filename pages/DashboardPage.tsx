@@ -4,9 +4,10 @@ import Sidebar from '../components/dashboard/Sidebar';
 import SettingsPanel from '../components/dashboard/SettingsPanel';
 import ClientDashboard from '../components/dashboard/ClientDashboard';
 import TutorDashboard from '../components/dashboard/TutorDashboard';
+import ChatInterface from '../components/dashboard/ChatInterface';
 import StatCard from '../components/dashboard/StatCard';
 import { User, ServiceRequest } from '../data/mockData';
-import { databases, dbId, serviceRequestsCollectionId } from '../lib/appwrite';
+import { databases, dbId, serviceRequestsCollectionId, chatsCollectionId, messagesCollectionId } from '../lib/appwrite';
 import { Query } from 'appwrite';
 
 interface DashboardPageProps {
@@ -155,6 +156,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user, setUser, navigate, 
                                         onStatusChange={handleServiceRequestStatusChange}
                                         onOpenChat={onOpenChat} // NEW: Pass onOpenChat
                                         /> : <div className="text-secondary-text">Select tutor/provider interests in Settings to see this page.</div>;
+      case 'Messages':
+        return <ChatInterface user={user} chatsCollectionId={chatsCollectionId} messagesCollectionId={messagesCollectionId} />;
       case 'Settings':
         return <SettingsPanel user={user} setUser={handleUpdateUser} />;
       default:
