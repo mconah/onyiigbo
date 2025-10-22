@@ -1,0 +1,107 @@
+Collection 1: users_profile
+Purpose: Stores all custom profile information for authenticated users, enriching Appwrite's basic user data.
+Appwrite Collection ID: users_profile
+Attributes:
+appwrite_user_id (String, Required, Indexed)
+Description: The unique $id of the user from Appwrite's Account service. Crucial for linking!
+email (String, Required, Indexed)
+Description: The user's email address.
+name (String, Required)
+Description: Full name of the user.
+role (String, Required, Enum: Client, Tutor, Service Provider, Admin)
+Description: The primary role of the user.
+interests (String, Required, Array)
+Description: List of interests/activities selected during signup.
+status (String, Required, Enum: Active, Verified, Pending Verification, Suspended)
+Description: Verification/activity status.
+joined (String, Required)
+Description: Date user joined (e.g., "YYYY-MM-DD").
+bio (String, Optional)
+Description: Biography for Tutors/Service Providers.
+location (String, Optional)
+Description: Physical location for Tutors.
+specialty (String, Optional, Enum: Beginner, Conversational, Advanced, Children, Business)
+Description: Tutoring/service specialty.
+avatar (String, Optional)
+Description: URL to profile picture.
+Permissions (Example):
+Read: role:member (so any logged-in user can read all profiles for browsing, e.g., finding tutors). Or specific user:[appwrite_user_id] if only self-read.
+Write: user:[appwrite_user_id] (only the owner can update their profile). Admins would need separate permissions.
+Collection 2: service_requests
+Purpose: Stores details of client requests for language services.
+Appwrite Collection ID: service_requests
+Attributes:
+client_appwrite_id (String, Required, Indexed)
+Description: The appwrite_user_id of the client who made the request.
+client_name (String, Required)
+Description: Name of the client.
+service_type (String, Required)
+Description: Type of service requested (e.g., "Translation").
+description (String, Required)
+Description: Detailed project description.
+date_requested (String, Required)
+Description: Date the request was made (e.g., "YYYY-MM-DD").
+status (String, Required, Enum: Pending, In Progress, Completed, Cancelled)
+Description: Current status of the request.
+assigned_provider_appwrite_id (String, Optional, Indexed)
+Description: The appwrite_user_id of the assigned provider.
+budget (String, Optional)
+Description: Client's proposed budget.
+deadline (String, Optional)
+Description: Project deadline.
+Permissions (Example):
+Read: user:[client_appwrite_id] (client can read their own). role:admin (admins can read all). user:[assigned_provider_appwrite_id] (assigned provider can read).
+Write: user:[client_appwrite_id] (client can update their request before assignment). role:admin (admins can update all).
+Collection 3: blog_posts
+Purpose: Stores articles for the "Igbo Log."
+Appwrite Collection ID: blog_posts
+Attributes:
+title (String, Required, Indexed)
+author_appwrite_id (String, Required, Indexed)
+Description: The appwrite_user_id of the author (usually an admin or content creator).
+author_name (String, Required)
+Description: Display name of the author.
+date_published (String, Required)
+Description: Publication date (e.g., "YYYY-MM-DD").
+category (String, Required)
+Description: Category of the post (e.g., "Culture", "Language").
+excerpt (String, Required)
+Description: Short summary.
+content (String, Required, Large text field)
+Description: Full markdown content.
+image (String, Optional)
+Description: URL to a featured image.
+Permissions (Example):
+Read: * (publicly readable).
+Write: role:admin (only admins can create/edit/delete).
+Collection 4: news_posts
+Purpose: Stores news and updates for the "News" section.
+Appwrite Collection ID: news_posts
+Attributes:
+title (String, Required, Indexed)
+author_appwrite_id (String, Required, Indexed)
+Description: The appwrite_user_id of the author (usually an admin).
+author_name (String, Required)
+Description: Display name of the author.
+date_published (String, Required)
+Description: Publication date (e.g., "YYYY-MM-DD").
+category (String, Required)
+Description: Category of the news (e.g., "Partnership", "Update").
+excerpt (String, Required)
+Description: Short summary.
+content (String, Required, Large text field)
+Description: Full markdown content.
+image (String, Required)
+Description: URL to a featured image.
+Permissions (Example):
+Read: * (publicly readable).
+Write: role:admin (only admins can create/edit/delete).
+Part 2: Implementing User Authentication and Data Integration with Appwrite
+Now, let's refactor the codebase to use Appwrite for authentication and data management. This will involve:
+lib/appwrite.ts: Initializing Appwrite client, account, and databases.
+data/mockData.tsx: Updating interfaces to include appwriteId for linking to Appwrite documents.
+App.tsx: Managing Appwrite user sessions and fetching the corresponding users_profile.
+LoginPage.tsx: Using Appwrite's email session for login and fetching the custom profile.
+SignupPage.tsx: Creating a new Appwrite user and immediately creating their users_profile document.
+Dashboard components: Updating AdminDashboardPage and other relevant components to fetch and manipulate data using Appwrite SDK calls instead of local mock data.
+This is a large set of changes, so I'll provide the comprehensive updates to all relevant files.

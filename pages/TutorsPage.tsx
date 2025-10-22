@@ -21,26 +21,42 @@ const TutorsPage: React.FC<TutorsPageProps> = ({ onNavigate }) => {
             setLoading(true);
             setError(null);
             try {
-                const response = await databases.listDocuments(
-                    dbId,
-                    usersCollectionId,
-                    [
-                        Query.equal('role', ['Tutor', 'Service Provider']),
-                        Query.equal('status', 'Verified'),
-                        Query.limit(100) // Adjust limit as needed
-                    ]
-                );
-                const fetchedTutors: Tutor[] = response.documents.map(doc => ({
-                    $id: doc.$id,
-                    // Fix: Add appwrite_user_id to satisfy the Tutor interface
-                    appwrite_user_id: doc.appwrite_user_id,
-                    name: doc.name,
-                    location: doc.location || 'Remote',
-                    specialty: doc.specialty || 'Beginner',
-                    availability: doc.availability || 'remote',
-                    avatar: doc.avatar || 'https://picsum.photos/seed/default/200',
-                    bio: doc.bio || 'This tutor has not provided a bio yet.',
-                }));
+        // Query for verified OR active Service Providers who opted into tutoring
+        const response = await databases.listDocuments(
+          dbId,
+          usersCollectionId,
+          [
+            Query.equal('role', 'Service Provider'),
+            Query.limit(100) // Adjust limit as needed
+          ]
+        );
+        
+        // Filter for Active or Verified status AND "Become a Tutor" interest
+        const providerDocs = response.documents.filter((doc: any) => {
+          const hasValidStatus = doc.status === 'Verified' || doc.status === 'Active';
+          const hasTutorInterest = (doc.interests || '').includes('Become a Tutor');
+          return hasValidStatus && hasTutorInterest;
+        });
+        
+        console.log('Total Service Providers:', response.documents.length);
+        console.log('Service Providers (Active or Verified) with "Become a Tutor":', providerDocs.length);
+        console.log('Tutor data:', providerDocs.map(doc => ({
+          name: doc.name,
+          role: doc.role,
+          status: doc.status,
+          interests: doc.interests
+        })));
+        
+        const fetchedTutors: Tutor[] = providerDocs.map((doc: any) => ({
+          $id: doc.$id,
+          appwrite_user_id: doc.appwrite_user_id,
+          name: doc.name,
+          location: doc.location || 'Remote',
+          specialty: doc.specialty || 'Beginner',
+          availability: doc.availability || 'remote',
+          avatar: doc.avatar || 'https://picsum.photos/seed/default/200',
+          bio: doc.bio || 'This tutor has not provided a bio yet.',
+        }));
                 setAllTutors(fetchedTutors);
             } catch (err) {
                 console.error('Failed to fetch all tutors:', err);

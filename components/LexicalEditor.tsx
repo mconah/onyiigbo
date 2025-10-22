@@ -37,15 +37,15 @@ const editorConfig = {
       underline: 'editor-text-underline',
       strikethrough: 'editor-text-strikethrough',
     },
-    nodes: [
-      HeadingNode,
-      QuoteNode,
-      CodeNode,
-      ListNode,
-      ListItemNode,
-      LinkNode,
-    ],
   },
+  nodes: [
+    HeadingNode,
+    QuoteNode,
+    CodeNode,
+    ListNode,
+    ListItemNode,
+    LinkNode,
+  ],
   editorState: null,
   onError: (error) => {
     console.error(error);
@@ -92,12 +92,12 @@ const Toolbar = () => {
       <button onClick={() => formatText('bold')}>Bold</button>
       <button onClick={() => formatText('italic')}>Italic</button>
       <button onClick={() => formatText('underline')}>Underline</button>
-      <button onClick={() => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND)}>UL</button>
-      <button onClick={() => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND)}>OL</button>
       <button onClick={insertLink}>Link</button>
     </div>
   );
 };
+
+const ErrorBoundaryComponent = () => <div>Error loading editor</div>;
 
 const LexicalEditor = ({ initialEditorState, onEditorStateChange }) => {
   const [editorState, setEditorState] = useState(null);
@@ -126,6 +126,7 @@ const LexicalEditor = ({ initialEditorState, onEditorStateChange }) => {
         <RichTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}
           placeholder={<div className="editor-placeholder">Enter some text...</div>}
+          ErrorBoundary={ErrorBoundaryComponent}
         />
         <OnChangePlugin onChange={handleChange} />
         <HistoryPlugin />

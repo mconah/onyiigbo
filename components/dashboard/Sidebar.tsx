@@ -17,6 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isAdmin = fa
     { name: 'Overview', show: true },
     { name: 'Client Hub', show: hasClientInterests },
     { name: 'Tutor Hub', show: hasProviderInterests },
+    { name: 'Messages', show: true },
     { name: 'Settings', show: true },
   ];
 
@@ -25,7 +26,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isAdmin = fa
     { name: 'Users', show: true },
     { name: 'Jobs', show: true },
     { name: 'Content', show: true },
-    { name: 'News', show: true }, // Added News tab
+    { name: 'News', show: true },
+    { name: 'Messages', show: true },
   ];
   
   const tabsToShow = (isAdmin ? adminTabs : userTabs).filter(tab => tab.show);

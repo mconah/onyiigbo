@@ -6,7 +6,7 @@ export interface User {
   name: string;
   email: string;
   role: 'Client' | 'Tutor' | 'Service Provider' | 'Admin';
-  interests: string[];
+  interests: string; // Comma-separated string of interests
   status: 'Active' | 'Verified' | 'Pending Verification' | 'Suspended';
   joined: string; // Date string 'YYYY-MM-DD'
   bio?: string;
