@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "vite preview --host 0.0.0.0 --port ${PORT:-4173}"
+    "start": "node server.js",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@lexical/code": "^0.37.0",
@@ -19,6 +20,7 @@
     "@lexical/utils": "^0.37.0",
     "@lexical/yjs": "^0.37.0",
     "appwrite": "^21.2.1",
+    "express": "^4.21.2",
     "lexical": "^0.37.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
