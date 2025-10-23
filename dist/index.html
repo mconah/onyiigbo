@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OnyiIgbo: Igbo Language Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Unica+One&display=swap" rel="stylesheet">
+    <style>
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes flyIn {
+        0% { opacity: 0; transform: translateX(-100px); }
+        100% { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes flyOut {
+        0% { opacity: 1; transform: translateX(0); }
+        100% { opacity: 0; transform: translateX(100px); }
+      }
+      @keyframes popIn {
+        0% { opacity: 0; transform: scale(0.8); }
+        70% { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+      @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(2deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+      }
+      @keyframes rise {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes pulseGlow {
+        0% { box-shadow: 0 0 0 rgba(155, 93, 229, 0.3); }
+        50% { box-shadow: 0 0 35px rgba(155, 93, 229, 0.35); }
+        100% { box-shadow: 0 0 0 rgba(155, 93, 229, 0.3); }
+      }
+      @keyframes scroll-partners {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll-partners {
+          animation: scroll-partners 35s linear infinite;
+          width: 200%; /* Double the width to contain original and duplicate logos */
+        }
+
+      /* Lexical Editor Styles */
+      .editor-shell {
+        position: relative;
+        background: #fff;
+        border: 1px solid #E0E0E0; /* soft-gray */
+        border-radius: 8px;
+        padding: 15px;
+        font-family: 'Noto Sans', sans-serif;
+        color: #333333; /* secondary-text */
+      }
+      .editor-container {
+        position: relative;
+        resize: vertical;
+        font-size: 15px;
+        line-height: 20px;
+        caret-color: #9B5DE5; /* accent-primary */
+        display: flex;
+        flex-direction: column;
+        min-height: 150px;
+      }
+      .editor-editor {
+        position: relative;
+        tab-size: 1;
+        outline: 0;
+        padding: 10px 0;
+        cursor: text;
+        overflow: auto;
+        flex-grow: 1;
+      }
+      .editor-placeholder {
+        color: #999;
+        overflow: hidden;
+        position: absolute;
+        text-overflow: ellipsis;
+        top: 15px;
+        left: 15px;
+        font-size: 15px;
+        user-select: none;
+        display: inline-block;
+        pointer-events: none;
+      }
+      .editor-text-bold { font-weight: bold; }
+      .editor-text-italic { font-style: italic; }
+      .editor-text-underline { text-decoration: underline; }
+      .editor-text-strikethrough { text-decoration: line-through; }
+      .editor-text-underlineStrikethrough { text-decoration: underline line-through; }
+      .editor-text-code { font-family: monospace; background-color: #f0f2f5; padding: 1px 4px; border-radius: 4px; }
+      .editor-list-ul, .editor-list-ol {
+        margin: 0;
+        padding: 0;
+        list-style-position: inside;
+      }
+      .editor-list-ol { list-style-type: decimal; }
+      .editor-list-ul { list-style-type: disc; }
+      .editor-listitem {
+        margin-left: 20px;
+      }
+      .editor-link {
+        color: #9B5DE5; /* accent-primary */
+        text-decoration: underline;
+      }
+      .editor-blockquote {
+        margin: 10px 0;
+        padding-left: 15px;
+        border-left: 4px solid #9B5DE5; /* accent-primary */
+        font-style: italic;
+        color: #333333; /* secondary-text */
+      }
+      .toolbar {
+        display: flex;
+        background: #FBF9FD; /* input-bg */
+        border-bottom: 1px solid #E0E0E0; /* soft-gray */
+        padding: 8px;
+        border-radius: 8px 8px 0 0;
+        gap: 4px;
+      }
+      .toolbar-item {
+        background: transparent;
+        border: 0;
+        border-radius: 5px;
+        padding: 6px 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+      }
+      .toolbar-item.active {
+        background-color: #9B5DE5; /* accent-primary */
+        color: white;
+      }
+      .toolbar-item:not(.active):hover {
+        background-color: #E0E0E0; /* soft-gray */
+      }
+      .toolbar-icon {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'light-lavender': '#F5F0FA',
+              'primary-text': '#000000',
+              'secondary-text': '#333333',
+              'accent-primary': '#9B5DE5',
+              'accent-hover': '#7A3EBD',
+              'soft-gray': '#E0E0E0',
+              'input-bg': '#FBF9FD',
+              'success': '#32B67A',
+              'error': '#D7263D',
+              'igbo-leaf-green': '#32B67A'
+            },
+            fontFamily: {
+              'unica-one': ['"Unica One"', 'cursive'],
+              'noto-sans': ['"Noto Sans"', 'sans-serif'],
+            },
+            animation: {
+              'gradient-slow': 'gradientShift 12s ease infinite',
+              'float-slow': 'float 10s ease-in-out infinite',
+              'rise-soft': 'rise 0.8s ease forwards',
+              'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
+            },
+            boxShadow: {
+              'glass': '0 20px 60px -25px rgba(155, 93, 229, 0.45)',
+            }
+          }
+        }
+      }
+    </script>
+
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "appwrite": "https://unpkg.com/appwrite@11.0.0/dist/esm/sdk.js",
+    "lexical": "https://unpkg.com/lexical@0.15.0/dist/lexical.mjs",
+    "@lexical/react/LexicalComposer": "https://unpkg.com/@lexical/react@0.15.0/LexicalComposer.mjs",
+    "@lexical/react/LexicalRichTextPlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalRichTextPlugin.mjs",
+    "@lexical/react/LexicalContentEditable": "https://unpkg.com/@lexical/react@0.15.0/LexicalContentEditable.mjs",
+    "@lexical/react/LexicalHistoryPlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalHistoryPlugin.mjs",
+    "@lexical/react/LexicalOnChangePlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalOnChangePlugin.mjs",
+    "@lexical/react/LexicalNestedListItemPlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalNestedListItemPlugin.mjs",
+    "@lexical/react/LexicalListPlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalListPlugin.mjs",
+    "@lexical/react/LexicalLinkPlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalLinkPlugin.mjs",
+    "@lexical/react/LexicalMarkdownShortcutPlugin": "https://unpkg.com/@lexical/react@0.15.0/LexicalMarkdownShortcutPlugin.mjs",
+    "@lexical/react/LexicalErrorBoundary": "https://unpkg.com/@lexical/react@0.15.0/LexicalErrorBoundary.mjs",
+    "@lexical/html": "https://unpkg.com/@lexical/html@0.15.0/dist/lexical-html.mjs",
+    "yjs": "https://unpkg.com/yjs@13.6.11/build/yjs.mjs",
+    "@lexical/yjs": "https://unpkg.com/@lexical/yjs@0.15.0/dist/lexical-yjs.mjs",
+    "@lexical/link": "https://aistudiocdn.com/@lexical/link@^0.37.0",
+    "@lexical/utils": "https://aistudiocdn.com/@lexical/utils@^0.37.0",
+    "@lexical/react/": "https://aistudiocdn.com/@lexical/react@^0.37.0/",
+    "@lexical/list": "https://aistudiocdn.com/@lexical/list@^0.37.0",
+    "@lexical/code": "https://aistudiocdn.com/@lexical/code@^0.37.0",
+    "@lexical/rich-text": "https://aistudiocdn.com/@lexical/rich-text@^0.37.0"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/assets/index-DhpDTSWI.js"></script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
