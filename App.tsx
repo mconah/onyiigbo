@@ -170,7 +170,7 @@ const App: React.FC = () => {
 
     switch (route.page) {
       case 'services':
-        return <ServicesPage />;
+        return <ServicesPage onNavigate={navigate} />;
       case 'tutors':
         return <TutorsPage onNavigate={navigate} />;
       case 'igbo-log':

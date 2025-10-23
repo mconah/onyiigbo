@@ -1,9 +1,9 @@
 import React from 'react';
 
 const teamMembers = [
-  { name: 'Chisom Nwosu', role: 'Founder & CEO', avatar: 'https://picsum.photos/seed/chisom/200' },
-  { name: 'Ogechi Adebayo', role: 'Head of Language Services', avatar: 'https://picsum.photos/seed/ogechi/200' },
-  { name: 'Ikenna Eze', role: 'Lead Community Manager', avatar: 'https://picsum.photos/seed/ikenna/200' },
+  { name: 'Onyedikachi Ogbu', role: 'Founder & CEO', avatar: './logo-short.png' },
+  { name: 'Onyi Raph', role: 'Head of Language Services', avatar: './logo-short.png' },
+  { name: 'Onyedikachi Rapheal', role: 'Lead Community Manager', avatar: './logo-short.png' },
 ];
 
 const AboutUsPage: React.FC = () => {
@@ -13,7 +13,7 @@ const AboutUsPage: React.FC = () => {
         <div className="container mx-auto px-6">
           <h1 className="font-unica-one text-5xl md:text-6xl font-bold text-primary-text">About OnyiIgbo</h1>
           <p className="mt-4 text-lg max-w-3xl mx-auto text-secondary-text">
-            Ije oma! We are passionate about preserving and promoting the richness of the Igbo language and culture for generations to come.
+            We are passionate about preserving and promoting the richness of the Igbo language and culture for generations to come.
           </p>
         </div>
       </header>
@@ -31,7 +31,7 @@ const AboutUsPage: React.FC = () => {
             </p>
           </div>
           <div>
-            <img src="https://picsum.photos/seed/mission/800/600" alt="Cultural illustration" className="rounded-lg shadow-xl" />
+            <img src="./logo.png" alt="Cultural illustration" className="rounded-lg shadow-xl" />
           </div>
         </div>
       </section>

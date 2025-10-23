@@ -12,7 +12,16 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-2xl font-unica-one mb-4">OnyiIgbo</h3>
+            <div className="flex items-center gap-1 mb-4">
+              <img 
+                src="/logo-short.png" 
+                alt="OnyiIgbo Logo" 
+                className="h-8 w-auto"
+              />
+              <span className="text-3xl font-unica-one text-white">
+                OnyiIgbo
+              </span>
+            </div>
             <p className="text-gray-400">Connecting the world to the heart of Igbo language and culture.</p>
           </div>
           <div>
