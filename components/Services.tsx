@@ -1,25 +1,29 @@
 import React from 'react';
 import { TranslateIcon, MicrophoneIcon, DocumentCheckIcon } from './icons/ServiceIcons';
 
-const serviceList = [
-  {
-    icon: <TranslateIcon />,
-    title: 'Translation',
-    description: 'Accurate and culturally nuanced translations for documents, websites, and media.',
-  },
-  {
-    icon: <MicrophoneIcon />,
-    title: 'Transcription & Voice Over',
-    description: 'Professional transcription of audio/video and authentic voice-overs for your projects.',
-  },
-  {
-    icon: <DocumentCheckIcon />,
-    title: 'Proofreading & Editing',
-    description: 'Ensure your Igbo content is flawless with our expert proofreading and editing services.',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const Services: React.FC = () => {
+  const { t } = useTranslation(['home', 'services']);
+
+  const serviceList = [
+    {
+      icon: <TranslateIcon />,
+      title: t('services:translation.title'),
+      description: t('services:translation.description'),
+    },
+    {
+      icon: <MicrophoneIcon />,
+      title: t('services:transcription.title'),
+      description: t('services:transcription.description'),
+    },
+    {
+      icon: <DocumentCheckIcon />,
+      title: t('services:proofreading.title'),
+      description: t('services:proofreading.description'),
+    },
+  ];
+
   return (
   <section id="services" className="relative py-14 md:py-18">
   <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -29,10 +33,10 @@ const Services: React.FC = () => {
       <div className="container mx-auto px-6">
   <div className="relative text-center mb-12 max-w-3xl mx-auto">
           <h2 className="font-unica-one text-4xl md:text-5xl font-bold text-primary-text mt-6">
-            Professional Igbo Language Services
+            {t('home:hero.title')}
           </h2>
           <p className="mt-4 text-lg text-secondary-text/80">
-            Our verified vendors deliver top-quality services tailored to your specific needs.
+            {t('home:hero.subtitle')}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

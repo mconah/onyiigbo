@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import CardSkeleton from '../components/CardSkeleton';
 import { Route } from '../App';
 import { NewsPost } from '../data/mockData';
 import NewsPostCard from '../components/NewsPostCard';
@@ -45,7 +46,6 @@ const NewsPage: React.FC<NewsPageProps> = ({ onNavigate }) => {
     fetchNews();
   }, []);
 
-  if (loading) return <div className="text-center py-10 text-primary-text">Loading news...</div>;
   if (error) return <div className="text-center py-10 text-error">{error}</div>;
 
   return (
@@ -62,7 +62,9 @@ const NewsPage: React.FC<NewsPageProps> = ({ onNavigate }) => {
       <section className="py-20">
         <div className="container mx-auto px-6">
             <h2 className="font-unica-one text-3xl font-bold text-primary-text mb-8">All Articles</h2>
-            {allNews.length > 0 ? (
+            {loading ? (
+                <CardSkeleton count={6} />
+            ) : allNews.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {allNews.map((newsItem) => (
                         <NewsPostCard key={newsItem.$id} post={newsItem} onNavigate={onNavigate} />

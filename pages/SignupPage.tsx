@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import { User } from '../data/mockData';
 import { account, databases, usersCollectionId, dbId } from '../lib/appwrite';
 import { ID, AppwriteException } from 'appwrite';
+import { useTranslation } from 'react-i18next';
 
 interface SignupPageProps {
   onLogin: (appwriteUserId: string) => void;
@@ -18,16 +19,17 @@ const interestOptions = [
 ];
 
 const SignupPage: React.FC<SignupPageProps> = ({ onLogin, onNavigate }) => {
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<'Client' | 'Service Provider' | 'Admin'>('Client');
+  const [role, setRole] = useState<'Student' | 'Contributor' | 'Service Provider' | 'Admin'>('Student');
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Get available interests based on selected role
-  const getInterestOptionsForRole = (userRole: 'Client' | 'Service Provider' | 'Admin'): string[] => {
+  const getInterestOptionsForRole = (userRole: 'Student' | 'Contributor' | 'Service Provider' | 'Admin'): string[] => {
     if (userRole === 'Admin') {
       return interestOptions; // All interests
     } else if (userRole === 'Service Provider') {
@@ -48,7 +50,7 @@ const SignupPage: React.FC<SignupPageProps> = ({ onLogin, onNavigate }) => {
   };
 
   // When role changes, reset interests to valid ones for new role
-  const handleRoleChange = (newRole: 'Client' | 'Service Provider' | 'Admin') => {
+  const handleRoleChange = (newRole: 'Student' | 'Contributor' | 'Service Provider' | 'Admin') => {
     setRole(newRole);
     const newAvailableInterests = getInterestOptionsForRole(newRole);
     // Keep only interests that are valid for the new role
@@ -144,8 +146,12 @@ const SignupPage: React.FC<SignupPageProps> = ({ onLogin, onNavigate }) => {
               <label className="block text-sm font-bold text-secondary-text mb-3">Select your role</label>
               <div className="space-y-2">
                 <label className="flex items-center p-3 bg-input-bg border border-soft-gray rounded-lg cursor-pointer hover:bg-accent-primary/10 max-w-sm">
-                  <input type="radio" name="role" value="Client" checked={role === 'Client'} onChange={() => handleRoleChange('Client')} disabled={loading} className="h-5 w-5 text-accent-primary focus:ring-accent-primary" />
-                  <span className="ml-3 text-secondary-text">Client</span>
+                  <input type="radio" name="role" value="Student" checked={role === 'Student'} onChange={() => handleRoleChange('Student')} disabled={loading} className="h-5 w-5 text-accent-primary focus:ring-accent-primary" />
+                  <span className="ml-3 text-secondary-text">{t('auth.roleStudent')}</span>
+                </label>
+                <label className="flex items-center p-3 bg-input-bg border border-soft-gray rounded-lg cursor-pointer hover:bg-accent-primary/10 max-w-sm">
+                  <input type="radio" name="role" value="Contributor" checked={role === 'Contributor'} onChange={() => handleRoleChange('Contributor')} disabled={loading} className="h-5 w-5 text-accent-primary focus:ring-accent-primary" />
+                  <span className="ml-3 text-secondary-text">{t('auth.roleContributor')}</span>
                 </label>
                 <label className="flex items-center p-3 bg-input-bg border border-soft-gray rounded-lg cursor-pointer hover:bg-accent-primary/10 max-w-sm">
                   <input type="radio" name="role" value="Service Provider" checked={role === 'Service Provider'} onChange={() => handleRoleChange('Service Provider')} disabled={loading} className="h-5 w-5 text-accent-primary focus:ring-accent-primary" />
@@ -177,6 +183,13 @@ const SignupPage: React.FC<SignupPageProps> = ({ onLogin, onNavigate }) => {
                   </label>
                 ))}
               </div>
+              {role === 'Contributor' && (
+                <p className="text-sm text-olive-green mt-3 bg-olive-green/10 p-3 rounded-lg border border-olive-green">
+                  ✓ {i18n.language === 'ig' 
+                    ? 'Dị ka onye ndepụta, ị nwere ike dee ederede, tụgharịa akụkọ, na nweta akara maka oru gị!' 
+                    : 'As a contributor, you can write articles, translate content, and earn points for your work!'}
+                </p>
+              )}
               {role === 'Service Provider' && selectedInterests.includes('Become a Tutor') && (
                 <p className="text-sm text-igbo-leaf-green mt-3 bg-igbo-leaf-green/10 p-3 rounded-lg border border-igbo-leaf-green">
                   ✓ You'll appear on the Tutors page once verified!

@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "about": "About Us",
+    "services": "Services",
+    "help_center": "Help Center",
+    "terms_of_service": "Terms Of Service",
+    "igbo_log": "Igbo Log",
+    "news": "News",
+    "follow_us": "Follow Us",
+    "careers": "Careers",
+    "tutors": "Tutors",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "start_chat": "Start Chat",
+    "dashboard": "Dashboard",
+    "log_out": "Log Out",
+    "open_chats": "Open Chats",
+    "new": "New"
+  },
+  "auth": {
+    "login": "Log in",
+    "signup": "Sign up"
+  },
+  "footer": {
+    "follow_us": "Follow Us",
+    "about": "About Us",
+    "help_center": "Help Center",
+    "services": "Services",
+    "terms_of_service": "Terms of Service",
+    "igbo_log": "Igbo Log",
+    "news": "News",
+    "quick_links": "Quick Links",
+    "support": "Support",
+    "find_a_tutor": "Find a Tutor",
+    "slogan": "Connecting the world to the heart of Igbo language and culture.",
+    "all_rights_reserved": "All rights reserved."
+  },
+  "language": {
+    "select": "Select Language",
+    "igbo": "Igbo",
+    "english": "English"
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const testimonials = [
   {
@@ -36,6 +37,7 @@ const testimonials = [
 const Testimonials: React.FC = () => {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const [animationClass, setAnimationClass] = useState('');
+  const { t } = useTranslation('home');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,12 +84,12 @@ const Testimonials: React.FC = () => {
 
           {/* Right side: Static Text */}
           <div className="lg:w-1/2 p-6 flex flex-col justify-center text-left">
-            <h3 className="font-unica-one text-3xl text-primary-text mb-4">Your Success is Our Story</h3>
+            <h3 className="font-unica-one text-3xl text-primary-text mb-4">{t('home:testimonials.title')}</h3>
             <p className="text-secondary-text/85 text-lg leading-relaxed">
-              At OnyiIgbo, we're dedicated to providing unparalleled Igbo language services and fostering a vibrant community. Hearing from our clients motivates us to continually improve and expand our offerings.
+              {t('home:testimonials.description')}
             </p>
             <p className="text-secondary-text/85 text-lg leading-relaxed mt-4">
-              Whether it's mastering the language, ensuring precise translations, or sharing cultural narratives, we are proud to be part of your journey. Join countless others who have experienced the OnyiIgbo difference!
+              {t('home:testimonials.description2')}
             </p>
           </div>
         </div>

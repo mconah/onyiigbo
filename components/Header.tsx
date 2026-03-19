@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Button from './Button';
+import LanguageSwitcher from './LanguageSwitcher';
+import AccessibilityPanel from './AccessibilityPanel';
 import { Route } from '../App';
 import { User } from '../data/mockData';
-import { ChatIcon } from './icons/ChatIcon'; // NEW: Import ChatIcon
+import { ChatIcon } from './icons/ChatIcon';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
     onNavigate: (route: Route) => void;
@@ -14,14 +17,16 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, user, onLogout, onOpenChatPanel, onOpenInitiateChatModal }) => {
+  const { t, i18n } = useTranslation('common');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false);
 
-  const navLinks: { name: string; page: 'home' | 'services' | 'tutors' | 'igbo-log' | 'about' | 'news' }[] = [
-    { name: 'Services', page: 'services' },
-    { name: 'Tutors', page: 'tutors' },
-    { name: 'Igbo Log', page: 'igbo-log' },
-    { name: 'News', page: 'news' },
-    { name: 'About Us', page: 'about' },
+  const navLinks: { name: string; page: 'home' | 'services' | 'tutors' | 'igbo-log' | 'about' | 'news' | 'careers' }[] = [
+    { name: t('nav.services'), page: 'services' },
+    { name: t('nav.tutors'), page: 'tutors' },
+    { name: t('nav.igbo_log'), page: 'igbo-log' },
+    { name: t('nav.news'), page: 'news' },
+
   ];
   
   const handleNavClick = (route: Route) => {
@@ -66,32 +71,33 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, user, onLogout
             </nav>
 
             <div className="hidden md:flex items-center space-x-3">
+              <LanguageSwitcher />
               {user && (
-                <div className="flex items-center gap-2 rounded-xl bg-white/70 px-2 py-1 backdrop-blur-xl">
+                <div className="flex items-center gap-0 rounded-xl bg-white/70 px-2 py-1 backdrop-blur-xl">
                   <button onClick={onOpenChatPanel} className="rounded-lg bg-accent-primary/15 p-2 text-accent-primary transition-all duration-300 hover:bg-accent-primary hover:text-white">
                     <ChatIcon className="h-5 w-5" />
                   </button>
                   <button onClick={onOpenInitiateChatModal} className="text-xs font-semibold uppercase tracking-wide text-secondary-text hover:text-accent-primary">
-                    Start Chat
+                    {t('nav.start_chat')}
                   </button>
                 </div>
               )}
               {user ? (
                 <>
                   <Button variant="secondary" onClick={() => handleNavClick({ page: user.role === 'Admin' ? 'admin' : 'dashboard' })}>
-                    Dashboard
+                    {user.role === 'Admin' ? t('nav.admin') : t('nav.dashboard')}
                   </Button>
                   <Button variant="primary" onClick={onLogout}>
-                    Log Out
+                    {t('nav.log_out')}
                   </Button>
                 </>
               ) : (
                 <>
                   <button onClick={() => handleNavClick({ page: 'login' })} className="font-bold text-secondary-text transition-colors duration-300 hover:text-accent-primary">
-                    Log In
+                    {t('nav.login')}
                   </button>
                   <Button onClick={() => handleNavClick({ page: 'signup' })} variant="primary">
-                    Sign Up
+                    {t('nav.signup')}
                   </Button>
                 </>
               )}
@@ -135,14 +141,19 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, user, onLogout
                   {link.name}
                 </button>
               ))}
+              
+              <div className="flex justify-start px-4 py-2 border-y border-white/30">
+                <LanguageSwitcher />
+              </div>
+
               {user && (
                 <div className="flex items-center justify-between rounded-xl bg-accent-primary/10 px-4 py-3">
                   <button onClick={onOpenChatPanel} className="flex items-center gap-2 text-accent-primary">
                     <ChatIcon className="h-5 w-5" />
-                    Open Chats
+                    {t('nav.open_chats')}
                   </button>
                   <button onClick={onOpenInitiateChatModal} className="text-xs font-semibold uppercase tracking-wide text-secondary-text">
-                    New
+                    {t('nav.new')}
                   </button>
                 </div>
               )}
@@ -153,10 +164,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, user, onLogout
                     className="w-full"
                     onClick={() => handleNavClick({ page: user.role === 'Admin' ? 'admin' : 'dashboard' })}
                   >
-                    Dashboard
+                    {user.role === 'Admin' ? t('nav.admin') : t('nav.dashboard')}
                   </Button>
                   <Button variant="primary" className="w-full" onClick={onLogout}>
-                    Log Out
+                    {t('nav.log_out')}
                   </Button>
                 </>
               ) : (
@@ -165,10 +176,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, user, onLogout
                     onClick={() => handleNavClick({ page: 'login' })}
                     className="rounded-xl px-4 py-3 text-center font-bold text-secondary-text transition-colors duration-300 hover:text-accent-primary"
                   >
-                    Log In
+                    {t('nav.login')}
                   </button>
                   <Button variant="primary" className="w-full" onClick={() => handleNavClick({ page: 'signup' })}>
-                    Sign Up
+                    {t('nav.signup')}
                   </Button>
                 </>
               )}

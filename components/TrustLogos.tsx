@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 const trustLogos = [
   { id: 1, src: './lexrunit.png', alt: 'Google Workspace' },
   { id: 2, src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png', alt: 'Amazon' },
@@ -19,12 +19,14 @@ const trustLogos = [
 ];
 
 const TrustLogos: React.FC = () => {
+  const { t } = useTranslation('home');
+
   return (
     <section className="relative py-16">
   <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 mx-auto h-32 max-w-5xl rounded-[32px] bg-white/40 blur-3xl" />
       <div className="container mx-auto px-6 text-center">
         <h2 className="font-unica-one text-2xl md:text-3xl font-bold text-primary-text/90 mb-10">
-          Trusted by Leading Companies
+          {t('trust.title')}
         </h2>
   <div className="rounded-[28px] border border-white/50 bg-white/60 px-6 py-8 shadow-[0_25px_60px_-28px_rgba(15,23,42,0.65)] backdrop-blur-2xl">
           <div className="grid grid-cols-3 md:grid-cols-5 gap-y-8 items-center justify-items-center max-w-6xl mx-auto">

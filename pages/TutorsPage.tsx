@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import CardSkeleton from '../components/CardSkeleton';
 import TutorCard from '../components/TutorCard';
 import { Route } from '../App';
 import { Tutor } from '../data/mockData';
@@ -76,7 +77,6 @@ const TutorsPage: React.FC<TutorsPageProps> = ({ onNavigate }) => {
         });
     }, [allTutors, locationFilter, specialtyFilter]);
 
-  if (loading) return <div className="text-center py-10 text-primary-text">Loading tutors...</div>;
   if (error) return <div className="text-center py-10 text-error">{error}</div>;
 
   return (
@@ -121,7 +121,9 @@ const TutorsPage: React.FC<TutorsPageProps> = ({ onNavigate }) => {
           </div>
 
           {/* Tutors Grid */}
-          {filteredTutors.length > 0 ? (
+          {loading ? (
+            <CardSkeleton count={8} />
+          ) : filteredTutors.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {filteredTutors.map((tutor) => (
                     <TutorCard key={tutor.$id} tutor={tutor} onNavigate={onNavigate} />

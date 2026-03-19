@@ -2,36 +2,39 @@ import React from 'react';
 import { TranslateIcon, MicrophoneIcon, DocumentCheckIcon } from '../components/icons/ServiceIcons';
 import Button from '../components/Button';
 import { Route } from '../App';
+import { useTranslation } from 'react-i18next';
 
 interface ServicesPageProps {
   onNavigate: (route: Route) => void;
 }
 
-const serviceList = [
-  {
-    icon: <TranslateIcon />,
-    title: 'Translation',
-    description: 'Accurate, culturally nuanced translations that resonate.',
-    details: ['Documents', 'Websites', 'Apps', 'Media'],
-    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80'
-  },
-  {
-    icon: <MicrophoneIcon />,
-    title: 'Voice & Transcription',
-    description: 'Professional voice-overs and accurate transcriptions.',
-    details: ['Audio', 'Video', 'Voice-overs', 'Podcasts'],
-    image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&q=80'
-  },
-  {
-    icon: <DocumentCheckIcon />,
-    title: 'Proofreading & Editing',
-    description: 'Flawless content with expert editing services.',
-    details: ['Academic', 'Business', 'Manuscripts', 'Web Content'],
-    image: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=800&q=80'
-  },
-];
-
 const ServicesPage: React.FC<ServicesPageProps> = ({ onNavigate }) => {
+  const { t } = useTranslation('services');
+
+  const serviceList = [
+    {
+      icon: <TranslateIcon />,
+      title: t('translation.title'),
+      description: t('translation.description'),
+      details: ['Documents', 'Websites', 'Apps', 'Media'],
+      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&q=80'
+    },
+    {
+      icon: <MicrophoneIcon />,
+      title: t('transcription.title'),
+      description: t('transcription.description'),
+      details: ['Audio', 'Video', 'Voice-overs', 'Podcasts'],
+      image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&q=80'
+    },
+    {
+      icon: <DocumentCheckIcon />,
+      title: t('proofreading.title'),
+      description: t('proofreading.description'),
+      details: ['Academic', 'Business', 'Manuscripts', 'Web Content'],
+      image: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=800&q=80'
+    },
+  ];
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -44,7 +47,7 @@ const ServicesPage: React.FC<ServicesPageProps> = ({ onNavigate }) => {
             className="h-20 md:h-24 mx-auto mb-6 animate-fade-in"
           />
           <h1 className="font-unica-one text-5xl md:text-7xl font-bold text-white mb-4 animate-fade-in">
-            Language Services
+            {t('page_title')}
           </h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white/95 mb-8">
             Expert Igbo language solutions for every need

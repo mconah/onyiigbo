@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "title": "Ọrụ Ọkachamara n'Asụsụ Igbo",
+    "subtitle": "Ndị onyeọrụ anyị e nyochaara nke ọma na-enye ọrụ kachasị mma nke a haziri naanị maka mkpa gị.",
+    "tagline": "Ijikorịta ụwa ruo n'isi asụsụ na omenala Igbo",
+    "gateway": "Ọnụ Ụzọ Gị Iji Banye n'Asụsụ na Omenala Igbo"
+  },
+  "cta": {
+    "request_service": "Rịọ inweta ọrụ asụsụ",
+    "find_tutor": "Chọta onye nkuzi"
+  },
+  "trust": {
+    "title": "Ulọ Ọrụ Ndị Dị Elu Tụkwasịrị Anyị Obi"
+  },
+  "testimonials": {
+    "title": "Oganiihu Gị bụ Akụkọ Anyị",
+    "description": "N'OnyiIgbo, anyị na-ewepụta onwe anyị n'inye ọrụ asụsụ Igbo na-enweghi atu ma na-azụlite ọha obodo dị ndụ. Ịnụ ihe ndị anyị na-arụụrụ ọrụ na-ekwu na-akpali anyị iga n'ihu na-emeziwanye ma na-agbawanye n'ihe ndị anyị na-enye",
+    "description2": "Ma ọ bụ imụta asụsụ a nke ọma, ijide n'aka na ntụgharị asụsụ ziri ezi, ma ọ bụ ikerịta akụkọ ọdịbendi, ọ bụụrụ anyị ihe obi ụtọ isonye na njem gị. Sonye ọtụtụ ndị ọzọ ndị nwegooro ahụmịhe dị iche n'OnyiIgbo!"
+  },
+  "partner": {
+    "description": "Soro ndị ọkachamara e nyochara nke ọma rụkọrịta maka ntụgharị asụsụ, nkuzi, ndụmọdụ omenala, na ihe ndị ọzọ. Nweta ahụmịhe nke ihe nketa Igbo site n'enyemọrụ a haziri ka a chọrọ yana akụrụngwa ndị nke ọha obodo kwadoro."
+  }
+}

@@ -46,7 +46,29 @@ const NewsPreview: React.FC<NewsPreviewProps> = ({ onNavigate }) => {
     fetchFeaturedNews();
   }, []);
 
-  if (loading) return <div className="text-center py-10 text-primary-text">Loading news...</div>;
+  if (loading) {
+    return (
+    <section id="news-preview" className="relative py-16 md:py-20">
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-12 right-[15%] h-56 w-56 rounded-full bg-accent-primary/25 blur-3xl opacity-60 animate-[float_20s_ease-in-out_infinite]" />
+        <div className="absolute bottom-0 left-[18%] h-64 w-64 rounded-full bg-igbo-leaf-green/20 blur-3xl opacity-60 animate-[float_16s_ease-in-out_infinite]" />
+      </div>
+      <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10 text-center">
+            <h2 className="mt-6 font-unica-one text-4xl md:text-5xl font-bold text-primary-text">
+              Latest News & Updates
+            </h2>
+            <p className="mt-4 text-lg text-secondary-text/85 md:mx-auto md:max-w-3xl">
+              Stay informed with the latest announcements, features, and community highlights from OnyiIgbo.
+            </p>
+          </div>
+          <article className="animate-pulse relative overflow-hidden rounded-[36px] bg-white/40 border border-white/50 shadow-[0_35px_90px_-40px_rgba(15,23,42,0.1)] backdrop-blur-xl h-[380px]" />
+        </div>
+      </div>
+    </section>
+    );
+  }
   if (error) return <div className="text-center py-10 text-error">{error}</div>;
   
   return (

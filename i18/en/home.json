@@ -1,0 +1,23 @@
+{
+  "hero": {
+    "title": "Professional Igbo Language Services",
+    "subtitle": "Our verified vendors deliver top-quality services tailored to your specific needs.",
+    "tagline": "Connecting the world to the heart of Igbo language and culture",
+    "gateway": "Your Gateway to Igbo Language & Culture"
+  },
+  "cta": {
+    "request_service": "Request for a language service",
+    "find_tutor": "Find a tutor"
+  },
+  "trust": {
+    "title": "Trusted by Leading Companies"
+  },
+  "testimonials": {
+    "title": "Your Success is Our Story",
+    "description": "At OnyiIgbo, we're dedicated to providing unparalleled Igbo language services and fostering a vibrant community. Hearing from our clients motivates us to continually improve and expand our offerings.",
+    "description2": "Whether it's mastering the language, ensuring precise translations, or sharing cultural narratives, we are proud to be part of your journey. Join countless others who have experienced the OnyiIgbo difference!"
+  },
+  "partner": {
+    "description": "Partner with verified professionals for translation, tutoring, cultural consulting, and beyond. Experience Igbo heritage through tailored services and community-powered resources."
+  }
+}

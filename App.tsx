@@ -16,15 +16,18 @@ import DashboardPage from './pages/DashboardPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import NewsPage from './pages/NewsPage';
 import NewsPostPage from './pages/NewsPostPage';
+import CareersPage from './pages/CareersPage';
+import ServiceProviderPortal from './pages/ServiceProviderPortal';
 import { User } from './data/mockData'; // User interface only
 import { account, databases, usersCollectionId, dbId } from './lib/appwrite';
 import { Models, Query } from 'appwrite';
 import { ChatProvider } from './components/ChatProvider'; // NEW: ChatProvider
 import ChatList from './components/ChatList'; // NEW: ChatList
 import InitiateChatModal from './components/modals/InitiateChatModal'; // NEW: InitiateChatModal
+import PageSkeleton from './components/PageSkeleton';
 
 export type Route =
-  | { page: 'home' | 'services' | 'tutors' | 'igbo-log' | 'about' | 'help' | 'terms' | 'login' | 'signup' | 'dashboard' | 'admin' | 'news' }
+  | { page: 'home' | 'services' | 'tutors' | 'igbo-log' | 'about' | 'help' | 'terms' | 'login' | 'signup' | 'dashboard' | 'admin' | 'news' | 'careers' | 'service-provider-portal' }
   | { page: 'tutor-profile', id: string } 
   | { page: 'blog-post', id: string } 
   | { page: 'news-post', id: string }
@@ -138,7 +141,7 @@ const App: React.FC = () => {
   }, [navigate]);
   
   // This helper is for components that only need to navigate to simple pages by string name
-  const handleSimplePageNavigate = (page: 'home' | 'services' | 'tutors' | 'igbo-log' | 'about' | 'help' | 'terms' | 'login' | 'signup' | 'news') => {
+  const handleSimplePageNavigate = (page: 'home' | 'services' | 'tutors' | 'igbo-log' | 'about' | 'help' | 'terms' | 'login' | 'signup' | 'news' | 'careers') => {
     navigate({ page });
   }
 
@@ -160,14 +163,6 @@ const App: React.FC = () => {
   }, [user, navigate]);
 
   const renderPage = () => {
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center min-h-[50vh] text-primary-text text-xl font-bold">
-          Loading...
-        </div>
-      );
-    }
-
     switch (route.page) {
       case 'services':
         return <ServicesPage onNavigate={navigate} />;
@@ -193,11 +188,19 @@ const App: React.FC = () => {
         return <NewsPage onNavigate={navigate} />;
       case 'news-post':
         return <NewsPostPage newsPostId={route.id} />;
+      case 'careers':
+        return <CareersPage onNavigate={navigate} />;
+      case 'service-provider-portal':
+        if (loading) return <PageSkeleton />;
+        return <ServiceProviderPortal user={user} />;
       case 'dashboard':
+        if (loading) return <PageSkeleton />;
         return user ? <DashboardPage user={user} setUser={setUser} navigate={navigate} onOpenChat={handleOpenChatPanel} /> : <LoginPage onLogin={handleLogin} onNavigate={handleSimplePageNavigate} />;
       case 'admin':
+        if (loading) return <PageSkeleton />;
         return user?.role === 'Admin' ? <AdminDashboardPage user={user} onOpenChat={handleOpenChatPanel} /> : <div className="text-error text-center py-10">Access Denied: Not an Admin</div>;
       case 'chat':
+        if (loading) return <PageSkeleton />;
         return user ? (
           <div className="container mx-auto px-6 py-10 h-[calc(100vh-160px)] flex flex-col">
             <h1 className="font-unica-one text-4xl font-bold text-primary-text mb-6">Messages</h1>
@@ -214,8 +217,8 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-light-lavender font-noto-sans text-secondary-text min-h-screen flex flex-col">
-      <ChatProvider currentUser={user} onOpenChat={handleOpenChatPanel} navigate={navigate}> {/* NEW: ChatProvider */}
-        <Header onNavigate={navigate} currentPage={route.page} user={user} onLogout={handleLogout} onOpenChatPanel={handleOpenChatPanel} onOpenInitiateChatModal={handleOpenInitiateChatModal} /> {/* NEW: Chat props */}
+      <ChatProvider currentUser={user} onOpenChat={handleOpenChatPanel} navigate={navigate}>
+        <Header onNavigate={navigate} currentPage={route.page} user={user} onLogout={handleLogout} onOpenChatPanel={handleOpenChatPanel} onOpenInitiateChatModal={handleOpenInitiateChatModal} />
         <main className="flex-grow">
           {renderPage()}
         </main>

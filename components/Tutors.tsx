@@ -51,7 +51,39 @@ const Tutors: React.FC<TutorsProps> = ({ onNavigate }) => {
     fetchTutors();
   }, []);
 
-  if (loading) return <div className="text-center py-10 text-primary-text">Loading tutors...</div>;
+  if (loading) {
+    return (
+  <section id="tutors" className="relative py-14 md:py-18">
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-10 right-[18%] h-64 w-64 rounded-full bg-accent-primary/25 blur-3xl opacity-60 animate-[float_16s_ease-in-out_infinite]" />
+        <div className="absolute bottom-0 left-[12%] h-72 w-72 rounded-full bg-igbo-leaf-green/20 blur-3xl opacity-60 animate-[float_20s_ease-in-out_infinite]" />
+      </div>
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col lg:flex-row items-center gap-12 rounded-[32px] border border-white/50 bg-white/60 p-10 shadow-[0_35px_80px_-32px_rgba(15,23,42,0.65)] backdrop-blur-2xl">
+          <div className="lg:w-1/2 text-center lg:text-left">
+            <span className="inline-flex items-center rounded-full border border-white/60 bg-white/50 px-4 py-1 text-sm font-semibold text-accent-primary backdrop-blur-xl">
+              Community Experts
+            </span>
+            <h2 className="font-unica-one text-4xl md:text-5xl font-bold text-primary-text mb-6 mt-6">
+              Connect with Expert Igbo Tutors
+            </h2>
+            <p className="text-lg text-secondary-text/85 mb-8 leading-relaxed">
+              Find the perfect tutor to guide you on your language journey. Browse profiles, filter by location for in-person sessions, and book lessons directly through our secure platform.
+            </p>
+            <Button variant="primary" onClick={() => onNavigate({ page: 'tutors' })}>Browse All Tutors</Button>
+          </div>
+          <div className="lg:w-1/2 w-full">
+            <div className="space-y-5">
+              {[1, 2, 3].map((idx) => (
+                <div key={idx} className="animate-pulse h-[100px] w-full rounded-2xl border border-white/50 bg-white/40 shadow-[0_18px_45px_-30px_rgba(15,23,42,0.1)] backdrop-blur-xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    );
+  }
   if (error) return <div className="text-center py-10 text-error">{error}</div>;
   if (tutors.length === 0) return (
   <section className="relative py-14 md:py-18">

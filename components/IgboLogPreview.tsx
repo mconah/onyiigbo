@@ -43,7 +43,32 @@ const IgboLogPreview: React.FC<IgboLogPreviewProps> = ({ onNavigate }) => {
     fetchPosts();
   }, []);
 
-  if (loading) return <div className="text-center py-10 text-primary-text">Loading blog posts...</div>;
+  if (loading) {
+    return (
+    <section id="igbo-log" className="relative py-20 md:py-24">
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-14 left-[18%] h-60 w-60 rounded-full bg-accent-primary/25 blur-3xl opacity-60 animate-[float_18s_ease-in-out_infinite]" />
+        <div className="absolute bottom-10 right-[22%] h-72 w-72 rounded-full bg-igbo-leaf-green/18 blur-3xl opacity-60 animate-[float_20s_ease-in-out_infinite]" />
+      </div>
+      <div className="container mx-auto px-6 text-center">
+        <div className="mb-14">
+          <span className="inline-flex items-center rounded-full border border-white/60 bg-white/50 px-4 py-1 text-sm font-semibold text-accent-primary backdrop-blur-xl">
+            Community Stories
+          </span>
+          <h2 className="font-unica-one text-4xl md:text-5xl font-bold text-primary-text mt-6">
+            From the Igbo Log
+          </h2>
+          <p className="mt-4 text-lg max-w-2xl mx-auto text-secondary-text/85">
+            A public journal where our community shares cultural stories, insights, and experiences in Igbo.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[1,2,3].map(i => <div key={i} className="h-64 animate-pulse rounded-[24px] border border-white/50 bg-white/40 shadow-[0_25px_70px_-32px_rgba(15,23,42,0.1)] backdrop-blur-xl" />)}
+        </div>
+      </div>
+    </section>
+    );
+  }
   if (error) return <div className="text-center py-10 text-error">{error}</div>;
   if (posts.length === 0) return (
   <section id="igbo-log" className="relative py-20 md:py-24">

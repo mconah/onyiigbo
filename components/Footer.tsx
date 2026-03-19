@@ -1,12 +1,15 @@
 import React from 'react';
 import { FacebookIcon, TwitterIcon, InstagramIcon } from './icons/SocialIcons';
 import { Route } from '../App';
+import { useTranslation } from 'react-i18next';
 
 interface FooterProps {
   onNavigate: (route: Route) => void;
 }
 
 const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const { t } = useTranslation('common');
+
   return (
     <footer id="footer" className="bg-primary-text text-white">
       <div className="container mx-auto px-6 py-12">
@@ -22,27 +25,27 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 OnyiIgbo
               </span>
             </div>
-            <p className="text-gray-400">Connecting the world to the heart of Igbo language and culture.</p>
+            <p className="text-gray-400">{t('footer.slogan')}</p>
           </div>
           <div>
-            <h4 className="font-bold mb-4 uppercase">Quick Links</h4>
+            <h4 className="font-bold mb-4 uppercase">{t('footer.quick_links')}</h4>
             <ul className="space-y-2">
-              <li><button onClick={() => onNavigate({ page: 'services' })} className="hover:text-accent-primary transition-colors">Services</button></li>
-              <li><button onClick={() => onNavigate({ page: 'tutors' })} className="hover:text-accent-primary transition-colors">Find a Tutor</button></li>
-              <li><button onClick={() => onNavigate({ page: 'igbo-log' })} className="hover:text-accent-primary transition-colors">Igbo Log</button></li>
-              <li><button onClick={() => onNavigate({ page: 'news' })} className="hover:text-accent-primary transition-colors">News</button></li>
+              <li><button onClick={() => onNavigate({ page: 'services' })} className="hover:text-accent-primary transition-colors">{t('footer.services')}</button></li>
+              <li><button onClick={() => onNavigate({ page: 'tutors' })} className="hover:text-accent-primary transition-colors">{t('footer.find_a_tutor')}</button></li>
+              <li><button onClick={() => onNavigate({ page: 'igbo-log' })} className="hover:text-accent-primary transition-colors">{t('footer.igbo_log')}</button></li>
+              <li><button onClick={() => onNavigate({ page: 'news' })} className="hover:text-accent-primary transition-colors">{t('footer.news')}</button></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-4 uppercase">Support</h4>
+            <h4 className="font-bold mb-4 uppercase">{t('footer.support')}</h4>
             <ul className="space-y-2">
-              <li><button onClick={() => onNavigate({ page: 'about' })} className="hover:text-accent-primary transition-colors">About Us</button></li>
-              <li><button onClick={() => onNavigate({ page: 'help' })} className="hover:text-accent-primary transition-colors">Help Center</button></li>
-              <li><button onClick={() => onNavigate({ page: 'terms' })} className="hover:text-accent-primary transition-colors">Terms of Service</button></li>
+              <li><button onClick={() => onNavigate({ page: 'about' })} className="hover:text-accent-primary transition-colors">{t('footer.about')}</button></li>
+              <li><button onClick={() => onNavigate({ page: 'help' })} className="hover:text-accent-primary transition-colors">{t('footer.help_center')}</button></li>
+              <li><button onClick={() => onNavigate({ page: 'terms' })} className="hover:text-accent-primary transition-colors">{t('footer.terms_of_service')}</button></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-4 uppercase">Follow Us</h4>
+            <h4 className="font-bold mb-4 uppercase">{t('footer.follow_us')}</h4>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter"><TwitterIcon /></a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><FacebookIcon /></a>
@@ -51,7 +54,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
         </div>
         <div className="mt-12 border-t border-gray-700 pt-6 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} OnyiIgbo. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} OnyiIgbo. {t('footer.all_rights_reserved')}</p>
         </div>
       </div>
     </footer>

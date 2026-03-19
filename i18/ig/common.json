@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "about": "Banyere Anyị",
+    "services": "Ọrụ gasị",
+    "help_center": "Ọdụ Enyemaka",
+    "terms_of_service": "Usoro Iwu nke Ọrụ",
+    "igbo_log": "Lọọgụ Igbo",
+    "news": "Akụkọ ihe mere",
+    "follow_us": "Soro anyị",
+    "careers": "Ọrụ",
+    "tutors": "Ndị Nkuzi",
+    "login": "Banye",
+    "signup": "Debanye aha",
+    "start_chat": "Bido Mkparịta ụka",
+    "dashboard": "Deeshibọọdụ",
+    "log_out": "Pụọ",
+    "open_chats": "Meghee Mkparịta ụka",
+    "new": "Ọhụrụ"
+  },
+  "auth": {
+    "login": "Banye n'akaunṭụ",
+    "signup": "Debanye aha"
+  },
+  "footer": {
+    "follow_us": "Soro anyị",
+    "about": "Banyere Anyị",
+    "help_center": "Ọdụ Enyemaka",
+    "services": "Ọrụ gasị",
+    "terms_of_service": "Usoro Iwu nke Ọrụ",
+    "igbo_log": "Lọọgụ Igbo",
+    "news": "Akụkọ ihe mere",
+    "quick_links": "Njikọ Ọsọ",
+    "support": "Nkwado",
+    "find_a_tutor": "Chọta onye nkuzi",
+    "slogan": "Ijikorịta ụwa ruo n'isi asụsụ na omenala Igbo.",
+    "all_rights_reserved": "Ikike niile echekwabara."
+  },
+  "language": {
+    "select": "Họpụta asụsụ",
+    "igbo": "Igbo",
+    "english": "Bekee"
+  }
+}
